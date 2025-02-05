@@ -11,10 +11,20 @@ namespace TestProject3
     public class WorkingWithDropDown
     {
         IWebDriver driver;
+        private ChromeOptions options;
 
         [SetUp]
         public void SetUp()
         {
+            options = new ChromeOptions();
+            options.AddArgument("headless");
+            options.AddArgument("no-sandbox");
+            options.AddArgument("disable-dev-shm-usage");
+            options.AddArgument("disable-gpu");
+            options.AddArgument("window-size=1920x1080");
+            options.AddArgument("disable-extensions");
+            options.AddArgument("remote-debugging-port=9222");
+
             // Create object of ChromeDriver
             driver = new ChromeDriver();
 
@@ -81,9 +91,14 @@ namespace TestProject3
                     }
                 }
             }
+        }
 
-            // Quit the driver
+        // Quit the driver
+        [TearDown]
+        public void TearDown()
+        {
             driver.Quit();
+            driver.Dispose();
         }
     }
 }
